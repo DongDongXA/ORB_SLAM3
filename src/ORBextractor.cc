@@ -431,6 +431,7 @@ namespace ORB_SLAM3
 
         mvImagePyramid.resize(nlevels);
 
+        //uniformly distribute the feature sum within each level of the pyramid
         mnFeaturesPerLevel.resize(nlevels);
         float factor = 1.0f / scaleFactor;
         float nDesiredFeaturesPerScale = nfeatures*(1 - factor)/(1 - (float)pow((double)factor, (double)nlevels));
@@ -444,6 +445,7 @@ namespace ORB_SLAM3
         }
         mnFeaturesPerLevel[nlevels-1] = std::max(nfeatures - sumFeatures, 0);
 
+        //backup pattern for compute descriptors
         const int npoints = 512;
         const Point* pattern0 = (const Point*)bit_pattern_31_;
         std::copy(pattern0, pattern0 + npoints, std::back_inserter(pattern));
@@ -898,6 +900,8 @@ namespace ORB_SLAM3
     void ORBextractor::ComputeKeyPointsOld(std::vector<std::vector<KeyPoint> > &allKeypoints)
     {
         allKeypoints.resize(nlevels);
+
+        //imageRatio=(img.cols+2*EDGE_THRESHOLD)/(img.rows+2*EDGE_THRESHOLD)
 
         float imageRatio = (float)mvImagePyramid[0].cols/mvImagePyramid[0].rows;
 
