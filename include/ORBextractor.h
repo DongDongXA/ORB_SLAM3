@@ -89,7 +89,7 @@ protected:
     std::vector<cv::KeyPoint> DistributeOctTree(const std::vector<cv::KeyPoint>& vToDistributeKeys, const int &minX,
                                            const int &maxX, const int &minY, const int &maxY, const int &nFeatures, const int &level);
 
-    void ComputeKeyPointsOld(std::vector<std::vector<cv::KeyPoint> >& allKeypoints);
+    void ComputeKeyPointsOld(std::vector<std::vector<cv::KeyPoint> >& allKeypoints);        //
     std::vector<cv::Point> pattern;
 
     int nfeatures;
@@ -98,14 +98,14 @@ protected:
     int iniThFAST;
     int minThFAST;
 
-    std::vector<int> mnFeaturesPerLevel;
+    std::vector<int> mnFeaturesPerLevel;    //the upperbound of feature sum on each level of scaling images
 
     std::vector<int> umax;
 
-    std::vector<float> mvScaleFactor;
-    std::vector<float> mvInvScaleFactor;    
-    std::vector<float> mvLevelSigma2;
-    std::vector<float> mvInvLevelSigma2;
+    std::vector<float> mvScaleFactor;       //
+    std::vector<float> mvInvScaleFactor;    //
+    std::vector<float> mvLevelSigma2;       //σ^2
+    std::vector<float> mvInvLevelSigma2;    //1/σ^2
 };
 
 } //namespace ORB_SLAM

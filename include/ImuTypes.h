@@ -52,9 +52,9 @@ public:
     Point(const cv::Point3f Acc, const cv::Point3f Gyro, const double &timestamp):
         a(Acc.x,Acc.y,Acc.z), w(Gyro.x,Gyro.y,Gyro.z), t(timestamp){}
 public:
-    Eigen::Vector3f a;
-    Eigen::Vector3f w;
-    double t;
+    Eigen::Vector3f a;      //acc
+    Eigen::Vector3f w;      //gyro
+    double t;               //timestamp
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
 
@@ -83,8 +83,8 @@ public:
     friend std::ostream& operator<< (std::ostream &out, const Bias &b);
 
 public:
-    float bax, bay, baz;
-    float bwx, bwy, bwz;
+    float bax, bay, baz;                //bias for acc x, y, z
+    float bwx, bwy, bwz;                //bias for gyro x, y, z
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
 

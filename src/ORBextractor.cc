@@ -1177,7 +1177,7 @@ namespace ORB_SLAM3
             Mat temp(wholeSize, image.type()), masktemp;
             mvImagePyramid[level] = temp(Rect(EDGE_THRESHOLD, EDGE_THRESHOLD, sz.width, sz.height));
 
-            // Compute the resized image
+            // Compute the resized image, notice that image pyramid always add border of same width while copying resized image on each level
             if( level != 0 )
             {
                 resize(mvImagePyramid[level-1], mvImagePyramid[level], sz, 0, 0, INTER_LINEAR);

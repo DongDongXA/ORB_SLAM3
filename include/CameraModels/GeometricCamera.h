@@ -73,8 +73,8 @@ namespace ORB_SLAM3 {
         virtual bool ReconstructWithTwoViews(const std::vector<cv::KeyPoint>& vKeys1, const std::vector<cv::KeyPoint>& vKeys2, const std::vector<int> &vMatches12,
                                              Sophus::SE3f &T21, std::vector<cv::Point3f> &vP3D, std::vector<bool> &vbTriangulated) = 0;
 
-        virtual cv::Mat toK() = 0;
-        virtual Eigen::Matrix3f toK_() = 0;
+        virtual cv::Mat toK() = 0;              //camera intrinsic matrix
+        virtual Eigen::Matrix3f toK_() = 0;     //camera intrinsic matrix
 
         virtual bool epipolarConstrain(GeometricCamera* otherCamera, const cv::KeyPoint& kp1, const cv::KeyPoint& kp2, const Eigen::Matrix3f& R12, const Eigen::Vector3f& t12, const float sigmaLevel, const float unc) = 0;
 
@@ -98,11 +98,11 @@ namespace ORB_SLAM3 {
         static long unsigned int nNextId;
 
     protected:
-        std::vector<float> mvParameters;
+        std::vector<float> mvParameters;    //camera intrinsics parameters (fx, fy, cx, cy) and others
 
-        unsigned int mnId;
+        unsigned int mnId;                  //camera id
 
-        unsigned int mnType;
+        unsigned int mnType;                //camera model type (0: pinhole, 1: fisheye)
     };
 }
 
