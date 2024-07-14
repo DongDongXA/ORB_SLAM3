@@ -35,7 +35,7 @@ public:
     void DivideNode(ExtractorNode &n1, ExtractorNode &n2, ExtractorNode &n3, ExtractorNode &n4);
 
     std::vector<cv::KeyPoint> vKeys;
-    cv::Point2i UL, UR, BL, BR;
+    cv::Point2i UL, UR, BL, BR;                 //upper left, upper right, bottom left, bottom right
     std::list<ExtractorNode>::iterator lit;
     bool bNoMore;
 };
@@ -92,20 +92,20 @@ protected:
     void ComputeKeyPointsOld(std::vector<std::vector<cv::KeyPoint> >& allKeypoints);        //
     std::vector<cv::Point> pattern;
 
-    int nfeatures;
-    double scaleFactor;
-    int nlevels;
-    int iniThFAST;
-    int minThFAST;
+    int nfeatures;                          //the number of features to be extracted
+    double scaleFactor;                     //the scale factor of pyramid
+    int nlevels;                            //the number of levels of pyramid
+    int iniThFAST;                          //the initial threshold of FAST
+    int minThFAST;                          //the minimum threshold of FAST
 
-    std::vector<int> mnFeaturesPerLevel;    //the upperbound of feature sum on each level of scaling images
+    std::vector<int> mnFeaturesPerLevel;    //the expected sum of feature sum on each level of scaling images
 
     std::vector<int> umax;
 
-    std::vector<float> mvScaleFactor;       //
-    std::vector<float> mvInvScaleFactor;    //
-    std::vector<float> mvLevelSigma2;       //σ^2
-    std::vector<float> mvInvLevelSigma2;    //1/σ^2
+    std::vector<float> mvScaleFactor;       //scale factor σ for every level of pyramid
+    std::vector<float> mvInvScaleFactor;    //Inverse scale factor 1/σ for every level of pyramid
+    std::vector<float> mvLevelSigma2;       //σ^2 for every level of pyramid
+    std::vector<float> mvInvLevelSigma2;    //1/σ^2 for every level of pyramid
 };
 
 } //namespace ORB_SLAM

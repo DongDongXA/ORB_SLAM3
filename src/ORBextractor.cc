@@ -475,6 +475,9 @@ namespace ORB_SLAM3
         for (vector<KeyPoint>::iterator keypoint = keypoints.begin(),
                      keypointEnd = keypoints.end(); keypoint != keypointEnd; ++keypoint)
         {
+            //computed orientation of the keypoint (-1 if not applicable);
+            //it's in [0,360) degrees and measured relative to
+            //image coordinate system, ie in clockwise.
             keypoint->angle = IC_Angle(image, keypoint->pt, umax);
         }
     }
@@ -909,8 +912,8 @@ namespace ORB_SLAM3
         {
             const int nDesiredFeatures = mnFeaturesPerLevel[level];
 
-            const int levelCols = sqrt((float)nDesiredFeatures/(5*imageRatio));
-            const int levelRows = imageRatio*levelCols;
+            const int levelCols = sqrt((float)nDesiredFeatures/(5*imageRatio)); // cell cols number
+            const int levelRows = imageRatio*levelCols;                         // cell rows number
 
             const int minBorderX = EDGE_THRESHOLD;
             const int minBorderY = minBorderX;
@@ -1068,6 +1071,7 @@ namespace ORB_SLAM3
 
             if((int)keypoints.size()>nDesiredFeatures)
             {
+                //sort keypoints according to the response and retain the best ones
                 KeyPointsFilter::retainBest(keypoints,nDesiredFeatures);
                 keypoints.resize(nDesiredFeatures);
             }
@@ -1081,6 +1085,7 @@ namespace ORB_SLAM3
     static void computeDescriptors(const Mat& image, vector<KeyPoint>& keypoints, Mat& descriptors,
                                    const vector<Point>& pattern)
     {
+        //every keypoint's descriptor is a 32 bit vector
         descriptors = Mat::zeros((int)keypoints.size(), 32, CV_8UC1);
 
         for (size_t i = 0; i < keypoints.size(); i++)
@@ -1095,11 +1100,13 @@ namespace ORB_SLAM3
             return -1;
 
         Mat image = _image.getMat();
+        //only accept gray image
         assert(image.type() == CV_8UC1 );
 
         // Pre-compute the scale pyramid
         ComputePyramid(image);
 
+        // try to find out FAST keypoints as adepatutely and uniformly as possible within the image pyramid
         vector < vector<KeyPoint> > allKeypoints;
         ComputeKeyPointsOctTree(allKeypoints);
         //ComputeKeyPointsOld(allKeypoints);
@@ -1134,6 +1141,7 @@ namespace ORB_SLAM3
 
             // preprocess the resized image
             Mat workingMat = mvImagePyramid[level].clone();
+            // denoise the image with GaussianBlur to get rid of high frequency noise's influence over feature extraction 
             GaussianBlur(workingMat, workingMat, Size(7, 7), 2, 2, BORDER_REFLECT_101);
 
             // Compute the descriptors
