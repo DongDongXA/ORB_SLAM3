@@ -2055,6 +2055,7 @@ namespace ORB_SLAM3
 
 // Bit set count operation from
 // http://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel
+// Computes the Hamming distance between two ORB descriptors
     int ORBmatcher::DescriptorDistance(const cv::Mat &a, const cv::Mat &b)
     {
         const int *pa = a.ptr<int32_t>();

@@ -72,7 +72,7 @@ namespace ORB_SLAM3
     const int HALF_PATCH_SIZE = 15;
     const int EDGE_THRESHOLD = 19;
 
-
+    //from ./opencv/modules/features2d/src/orb.cpp fxn ICAngles
     static float IC_Angle(const Mat& image, Point2f pt,  const vector<int> & u_max)
     {
         int m_01 = 0, m_10 = 0;
@@ -104,6 +104,7 @@ namespace ORB_SLAM3
 
 
     const float factorPI = (float)(CV_PI/180.f);
+    //from ./opencv/modules/features2d/src/orb.cpp fxn computeOrbDescriptors
     static void computeOrbDescriptor(const KeyPoint& kpt,
                                      const Mat& img, const Point* pattern,
                                      uchar* desc)
@@ -145,7 +146,7 @@ namespace ORB_SLAM3
 #undef GET_VALUE
     }
 
-
+    //from ./opencv/modules/features2d/src/orb.cpp static array bit_pattern_31_
     static int bit_pattern_31_[256*4] =
             {
                     8,-3, 9,5/*mean (0), correlation (0)*/,

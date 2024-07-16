@@ -126,6 +126,7 @@ namespace ORB_SLAM3 {
         // θ = (xd^2 + yd^2)^(1/2)
         float theta_d = sqrtf(pw.x * pw.x + pw.y * pw.y);  // sin(ψ) = yc / r
         //make sure θ within [-π/2,π/2]
+        //TODO: make clear why this equation is true
         theta_d = fminf(fmaxf(-CV_PI / 2.f, theta_d), CV_PI / 2.f);
 
         if (theta_d > 1e-8) {
