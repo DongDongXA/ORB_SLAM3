@@ -201,9 +201,9 @@ namespace ORB_SLAM3 {
         for(size_t i = 0; i < vKeys1.size(); i++) vPts1[i] = vKeys1[i].pt;
         for(size_t i = 0; i < vKeys2.size(); i++) vPts2[i] = vKeys2[i].pt;                                      
 
-        cv::Mat D = (cv::Mat_<float>(4,1) << mvParameters[4], mvParameters[5], mvParameters[6], mvParameters[7]);
-        cv::Mat R = cv::Mat::eye(3,3,CV_32F);
-        cv::Mat K = this->toK();
+        cv::Mat D = (cv::Mat_<float>(4,1) << mvParameters[4], mvParameters[5], mvParameters[6], mvParameters[7]);   //Input vector of distortion coefficients k1,k2,k3,k4
+        cv::Mat R = cv::Mat::eye(3,3,CV_32F);   //Rectification transformation in the object space: 3x3 1-channel, or vector: 3x1/1x3 1-channel or 1x1 3-channel 
+        cv::Mat K = this->toK();                //camera intrinsic matrix
         cv::fisheye::undistortPoints(vPts1,vPts1,K,D,R,K);
         cv::fisheye::undistortPoints(vPts2,vPts2,K,D,R,K);
 
